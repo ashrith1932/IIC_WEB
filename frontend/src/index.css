@@ -1,7 +1,7 @@
+@import "tailwindcss";
+
 @import url('https://fonts.googleapis.com/css2?family=Bitcount+Single:wght@100..900&family=Doto:wght@100..900&family=Noto+Serif:ital,wdth,wght@0,62.5,100..900;1,62.5,100..900&family=Quantico:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -18,12 +18,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* --- FIX IS HERE --- */
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 100vw;
+  width: 100%;
   min-height: 100vh;
+  /* Removed: display: flex, place-items: center (This was breaking your layout) */
   overflow-x: hidden;
   position: relative;
+}
+
+/* Ensure the React root div takes up full space */
+#root {
+  width: 100%;
+  min-height: 100vh;
 }
