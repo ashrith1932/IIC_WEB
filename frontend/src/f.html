@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Depth Button</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ========== STYLE 1: CLASSIC 3D BUTTON ========== */
+    .button-3d {
+      position: relative;
+      padding: 20px 50px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      background: linear-gradient(to bottom, #ff6b6b, #ee5a6f);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 
+        0 6px 0 #c92a2a,
+        0 8px 10px rgba(0, 0, 0, 0.4);
+      transform: translateY(0);
+      user-select: none;
+      outline: none;
+    }
+
+    .button-3d:hover {
+      background: linear-gradient(to bottom, #ff7777, #f06595);
+      box-shadow: 
+        0 6px 0 #c92a2a,
+        0 10px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .button-3d:active {
+      transform: translateY(4px);
+      box-shadow: 
+        0 2px 0 #c92a2a,
+        0 4px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ========== STYLE 2: EXTRUDED DEPTH BUTTON ========== */
+    .button-extrude {
+      position: relative;
+      padding: 20px 50px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #1e1e1e;
+      background: #ffd93d;
+      border: 3px solid #000;
+      border-radius: 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 
+        4px 4px 0 #000,
+        8px 8px 0 rgba(0, 0, 0, 0.2);
+      transform: translate(0, 0);
+      user-select: none;
+      outline: none;
+    }
+
+    .button-extrude:hover {
+      background: #ffed4e;
+      box-shadow: 
+        6px 6px 0 #000,
+        12px 12px 0 rgba(0, 0, 0, 0.2);
+      transform: translate(-2px, -2px);
+    }
+
+    .button-extrude:active {
+      box-shadow: 
+        2px 2px 0 #000;
+      transform: translate(2px, 2px);
+    }
+
+    /* ========== STYLE 3: NEUMORPHIC 3D BUTTON ========== */
+    .button-neuro {
+      position: relative;
+      padding: 20px 50px;
+      font-size: 24px;
+      font-weight: 600;
+      color: #5a67d8;
+      background: #e0e5f3;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 
+        8px 8px 16px rgba(136, 165, 191, 0.48),
+        -8px -8px 16px rgba(255, 255, 255, 0.8),
+        inset 0 0 0 rgba(136, 165, 191, 0);
+      user-select: none;
+      outline: none;
+    }
+
+    .button-neuro:hover {
+      color: #434190;
+      box-shadow: 
+        12px 12px 24px rgba(136, 165, 191, 0.5),
+        -12px -12px 24px rgba(255, 255, 255, 0.9),
+        inset 0 0 0 rgba(136, 165, 191, 0);
+    }
+
+    .button-neuro:active {
+      box-shadow: 
+        2px 2px 4px rgba(136, 165, 191, 0.3),
+        -2px -2px 4px rgba(255, 255, 255, 0.5),
+        inset 8px 8px 16px rgba(136, 165, 191, 0.2),
+        inset -8px -8px 16px rgba(255, 255, 255, 0.1);
+    }
+
+    /* ========== STYLE 4: LAYERED DEPTH BUTTON ========== */
+    .button-layered {
+      position: relative;
+      padding: 20px 50px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      user-select: none;
+      outline: none;
+    }
+
+    .button-layered::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      z-index: -1;
+      transition: all 0.25s ease;
+      transform: translate(0, 8px);
+      filter: brightness(0.7);
+    }
+
+    .button-layered::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      z-index: -2;
+      transition: all 0.25s ease;
+      transform: translate(0, 16px);
+      filter: brightness(0.4);
+    }
+
+    .button-layered:hover {
+      transform: translateY(-4px);
+    }
+
+    .button-layered:hover::before {
+      transform: translate(0, 12px);
+    }
+
+    .button-layered:hover::after {
+      transform: translate(0, 20px);
+    }
+
+    .button-layered:active {
+      transform: translateY(4px);
+    }
+
+    .button-layered:active::before {
+      transform: translate(0, 4px);
+    }
+
+    .button-layered:active::after {
+      transform: translate(0, 8px);
+    }
+
+    /* ========== STYLE 5: ISOMETRIC BUTTON ========== */
+    .button-isometric {
+      position: relative;
+      padding: 20px 50px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      background: #4ecdc4;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      transform-style: preserve-3d;
+      user-select: none;
+      outline: none;
+    }
+
+    .button-isometric::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -20px;
+      width: 20px;
+      height: 100%;
+      background: #3ba99f;
+      transform: skewY(45deg);
+      transform-origin: right;
+    }
+
+    .button-isometric::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 20px;
+      background: #2a7a72;
+      transform: skewX(45deg);
+      transform-origin: top;
+    }
+
+    .button-isometric:hover {
+      background: #5eddd4;
+      transform: translate(-4px, -4px);
+    }
+
+    .button-isometric:active {
+      background: #3ba99f;
+      transform: translate(2px, 2px);
+    }
+
+    /* ========== STYLE 6: GLOWING DEPTH BUTTON ========== */
+    .button-glow {
+      position: relative;
+      padding: 20px 50px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(to bottom, #f093fb 0%, #f5576c 100%);
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 
+        0 8px 0 #c92a60,
+        0 12px 20px rgba(245, 87, 108, 0.4),
+        inset 0 -2px 10px rgba(0, 0, 0, 0.1);
+      user-select: none;
+      outline: none;
+    }
+
+    .button-glow:hover {
+      box-shadow: 
+        0 8px 0 #c92a60,
+        0 12px 30px rgba(245, 87, 108, 0.6),
+        0 0 40px rgba(245, 87, 108, 0.4),
+        inset 0 -2px 10px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .button-glow:active {
+      transform: translateY(6px);
+      box-shadow: 
+        0 2px 0 #c92a60,
+        0 4px 10px rgba(245, 87, 108, 0.3),
+        inset 0 -2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Labels */
+    .button-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .button-label {
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0.9;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        gap: 30px;
+      }
+
+      .button-3d,
+      .button-extrude,
+      .button-neuro,
+      .button-layered,
+      .button-isometric,
+      .button-glow {
+        padding: 18px 40px;
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="button-wrapper">
+      <button class="button-3d">Click Me</button>
+      <span class="button-label">Classic 3D</span>
+    </div>
+
+    <div class="button-wrapper">
+      <button class="button-extrude">Click Me</button>
+      <span class="button-label">Extruded</span>
+    </div>
+
+    <div class="button-wrapper">
+      <button class="button-neuro">Click Me</button>
+      <span class="button-label">Neumorphic</span>
+    </div>
+
+    <div class="button-wrapper">
+      <button class="button-layered">Click Me</button>
+      <span class="button-label">Layered Depth</span>
+    </div>
+
+    <div class="button-wrapper">
+      <button class="button-isometric">Click Me</button>
+      <span class="button-label">Isometric</span>
+    </div>
+
+    <div class="button-wrapper">
+      <button class="button-glow">Click Me</button>
+      <span class="button-label">Glowing</span>
+    </div>
+  </div>
+
+  <script>
+    // Add click ripple effect for extra feedback
+    document.querySelectorAll('button').forEach(button => {
+      button.addEventListener('click', function(e) {
+        // Create ripple element
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s ease-out';
+        ripple.style.pointerEvents = 'none';
+
+        this.style.position = 'relative';
+        this.style.overflow = 'hidden';
+        this.appendChild(ripple);
+
+        setTimeout(() => ripple.remove(), 600);
+      });
+    });
+
+    // Add ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes ripple {
+        to {
+          transform: scale(2);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
